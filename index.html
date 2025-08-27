@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Midnight Hub</title>
+  <meta name="description" content="YOUR TAGLINE OR SHORT DESCRIPTION" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#140037;      /* background */
+      --card:#1b004b;
+      --muted:#d1bef3;
+      --text:#ffffff;
+      --accent:#954bf6; /* main color */
+      --accent2:#d1bef3; /* accent */
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.4);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{opacity:.9}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    header{position:sticky;top:0;backdrop-filter:saturate(150%) blur(12px);background:rgba(20,0,55,.7);border-bottom:1px solid rgba(255,255,255,.08);z-index:20}
+    nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--accent)}
+    .brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:var(--shadow)}
+    .navlinks{display:flex;gap:18px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0d10;font-weight:700;transition:.2s}
+    .btn.ghost{background:transparent;border:1px solid var(--accent2);color:var(--accent2)}
+    .btn:hover{transform:translateY(-2px)}
+
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:70px 0}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .card.pad{padding:32px}
+    h1{font-size:clamp(32px,4vw,56px);line-height:1.1;margin:0 0 14px;color:var(--accent)}
+    h2{font-size:clamp(24px,3vw,36px);margin:0 0 14px;color:var(--accent2)}
+    p.muted{color:var(--muted)}
+    .tagline{font-size:20px;color:var(--muted);margin:10px 0 22px}
+    .hero img{width:100%;height:auto;border-radius:var(--radius);display:block}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+    .project{transition:transform .12s ease, box-shadow .12s ease}
+    .project:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,.4)}
+    .project .thumb{height:160px;border-bottom:1px solid rgba(255,255,255,.08);border-top-left-radius:var(--radius);border-top-right-radius:var(--radius);background:#0b0c10 center/cover no-repeat}
+    .project .content{padding:16px}
+    .project h3{margin:0 0 6px;font-size:18px;color:var(--accent)}
+    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .badge{padding:4px 10px;border:1px solid var(--accent2);border-radius:999px;font-size:12px;color:var(--accent2)}
+
+    section{margin:60px 0}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+
+    footer{margin:60px 0 24px;color:var(--muted);font-size:14px;text-align:center}
+
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr 1fr}
+      .cards{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand"><div class="logo" aria-hidden="true"></div><span>Yeahblxr</span></div>
+        <div class="navlinks">
+          <a href="#projects">Projects</a>
+          <a href="#about">About</a>
+          <a href="#contact" class="btn ghost">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="card pad">
+        <h1>Hi, I’m YOUR NAME</h1>
+        <p class="tagline">YOUR TAGLINE – e.g., "Student developer building Roblox tools & sleek UIs."</p>
+        <p class="muted">Short intro (2–3 sentences). Mention your focus, tools you like, and what you’re looking for.</p>
+        <div style="display:flex;gap:12px;margin-top:14px">
+          <a class="btn" href="#projects">See projects</a>
+          <a class="btn ghost" href="YOUR-RESUME.pdf" target="_blank" rel="noopener">Resume</a>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1400&auto=format&fit=crop" alt="Showcase image or avatar" />
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <p class="muted">A few things I’ve built recently.</p>
+      <div class="grid" id="projectGrid">
+        <a class="card project" href="https://example.com" target="_blank" rel="noopener">
+          <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1400&auto=format&fit=crop')"></div>
+          <div class="content">
+            <h3>Project Title</h3>
+            <p class="muted">1–2 line description of what it does and why it’s cool.</p>
+            <div class="badges">
+              <span class="badge">HTML</span>
+              <span class="badge">CSS</span>
+              <span class="badge">JS</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="cards">
+        <div class="card pad">
+          <h2>About</h2>
+          <p>Write a short bio (4–6 sentences). Mention your interests, what you’re learning, and any achievements you want to highlight.</p>
+        </div>
+        <div class="card pad">
+          <h2>Skills</h2>
+          <ul>
+            <li>HTML / CSS / JavaScript</li>
+            <li>Lua (Roblox) – UI design & tools</li>
+            <li>Python basics</li>
+            <li>Version control (Git/GitHub)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="card pad">
+        <h2>Contact</h2>
+        <p>Got a question or want to collaborate? Reach out.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a class="btn" href="mailto:YOUR@EMAIL.com">Email Me</a>
+          <a class="btn ghost" href="https://github.com/YOURUSER" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn ghost" href="https://twitter.com/YOURUSER" target="_blank" rel="noopener">Twitter</a>
+          <a class="btn ghost" href="https://www.roblox.com/users/ID/profile" target="_blank" rel="noopener">Roblox</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> YOUR NAME · Built by hand and hosted free on GitHub Pages/Netlify
+    </footer>
+  </main>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id=a.getAttribute('href');
+        if(id.length>1){
+          e.preventDefault();
+          document.querySelector(id).scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+    });
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>
