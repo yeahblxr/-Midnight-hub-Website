@@ -28,14 +28,25 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
       pointer-events: none;
     }
     
-    .container{max-width:1100px;margin:0 auto;padding:24px;position:relative;z-index:1}
-    header{position:sticky;top:0;backdrop-filter:saturate(150%) blur(12px);background:rgba(20,0,55,.7);border-bottom:1px solid rgba(255,255,255,.08);z-index:20}
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      z-index: -2;
+    }
+    
+    .container{max-width:1100px;margin:0 auto;padding:24px;position:relative;z-index:10}
+    header{position:sticky;top:0;backdrop-filter:saturate(150%) blur(12px);background:rgba(20,0,55,.7);border-bottom:1px solid rgba(255,255,255,.08);z-index:100}
     nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--accent)}
     .brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:var(--shadow)}
@@ -52,8 +63,9 @@
       color:var(--accent);
     }
 
+    main{position:relative;z-index:10}
     .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:70px 0}
-    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);transition:box-shadow .3s ease}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);transition:box-shadow .3s ease;position:relative;z-index:10}
     .card.pad{padding:32px}
     .card:hover {
       box-shadow: 
@@ -86,10 +98,10 @@
     .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
     .badge{padding:4px 10px;border:1px solid var(--accent2);border-radius:999px;font-size:12px;color:var(--accent2)}
 
-    section{margin:60px 0}
+    section{margin:60px 0;position:relative;z-index:10}
     .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 
-    footer{margin:60px 0 24px;color:var(--muted);font-size:14px;text-align:center}
+    footer{margin:60px 0 24px;color:var(--muted);font-size:14px;text-align:center;position:relative;z-index:10}
 
     /* Fade-in animations */
     .fade-in {
@@ -257,14 +269,17 @@
         this.canvas = document.getElementById('particles-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.particles = [];
-        this.particleCount = 100;
-        this.connectionDistance = 150;
+        this.particleCount = 60;
+        this.connectionDistance = 120;
         
         this.resize();
         this.init();
         this.animate();
         
-        window.addEventListener('resize', () => this.resize());
+        window.addEventListener('resize', () => {
+          this.resize();
+          this.init();
+        });
       }
       
       resize() {
@@ -278,10 +293,11 @@
           this.particles.push({
             x: Math.random() * this.canvas.width,
             y: Math.random() * this.canvas.height,
-            vx: (Math.random() - 0.5) * 0.8,
-            vy: (Math.random() - 0.5) * 0.8,
-            size: Math.random() * 3 + 2,
-            opacity: Math.random() * 0.6 + 0.4
+            vx: (Math.random() - 0.5) * 1,
+            vy: (Math.random() - 0.5) * 1,
+            size: Math.random() * 4 + 2,
+            opacity: Math.random() * 0.8 + 0.2,
+            hue: Math.random() * 60 + 270 // Purple to pink range
           });
         }
       }
@@ -292,19 +308,24 @@
           particle.y += particle.vy;
           
           // Bounce off edges
-          if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
-          if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
-          
-          // Keep particles within bounds
-          particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
-          particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+          if (particle.x <= 0 || particle.x >= this.canvas.width) {
+            particle.vx *= -1;
+            particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
+          }
+          if (particle.y <= 0 || particle.y >= this.canvas.height) {
+            particle.vy *= -1;
+            particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+          }
         });
       }
       
       draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        // Clear canvas with slight transparency for trail effect
+        this.ctx.fillStyle = 'rgba(20, 0, 55, 0.05)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Draw connections
+        // Draw connections first (behind particles)
+        this.ctx.lineWidth = 1;
         for (let i = 0; i < this.particles.length; i++) {
           for (let j = i + 1; j < this.particles.length; j++) {
             const dx = this.particles[i].x - this.particles[j].x;
@@ -312,9 +333,8 @@
             const distance = Math.sqrt(dx * dx + dy * dy);
             
             if (distance < this.connectionDistance) {
-              const opacity = (1 - distance / this.connectionDistance) * 0.5;
-              this.ctx.strokeStyle = `rgba(180, 120, 255, ${opacity})`;
-              this.ctx.lineWidth = 1.5;
+              const opacity = (1 - distance / this.connectionDistance) * 0.4;
+              this.ctx.strokeStyle = `rgba(149, 75, 246, ${opacity})`;
               this.ctx.beginPath();
               this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
               this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
@@ -325,22 +345,30 @@
         
         // Draw particles
         this.particles.forEach(particle => {
+          // Outer glow
+          const gradient = this.ctx.createRadialGradient(
+            particle.x, particle.y, 0,
+            particle.x, particle.y, particle.size * 3
+          );
+          gradient.addColorStop(0, `hsla(${particle.hue}, 70%, 70%, ${particle.opacity})`);
+          gradient.addColorStop(0.5, `hsla(${particle.hue}, 70%, 60%, ${particle.opacity * 0.3})`);
+          gradient.addColorStop(1, `hsla(${particle.hue}, 70%, 50%, 0)`);
+          
+          this.ctx.fillStyle = gradient;
+          this.ctx.beginPath();
+          this.ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2);
+          this.ctx.fill();
+          
           // Main particle
+          this.ctx.fillStyle = `hsla(${particle.hue}, 80%, 80%, ${particle.opacity})`;
           this.ctx.beginPath();
           this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-          this.ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
           this.ctx.fill();
           
-          // Glow effect
+          // Bright center
+          this.ctx.fillStyle = `hsla(${particle.hue}, 90%, 90%, ${particle.opacity * 0.8})`;
           this.ctx.beginPath();
-          this.ctx.arc(particle.x, particle.y, particle.size + 2, 0, Math.PI * 2);
-          this.ctx.fillStyle = `rgba(180, 120, 255, ${particle.opacity * 0.3})`;
-          this.ctx.fill();
-          
-          // Inner bright core
-          this.ctx.beginPath();
-          this.ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2);
-          this.ctx.fillStyle = `rgba(220, 180, 255, ${particle.opacity * 0.8})`;
+          this.ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2);
           this.ctx.fill();
         });
       }
@@ -352,8 +380,10 @@
       }
     }
     
-    // Initialize particle system
-    new ParticleSystem();
+    // Initialize particle system when page loads
+    window.addEventListener('load', () => {
+      new ParticleSystem();
+    });
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
