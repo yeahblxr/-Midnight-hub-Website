@@ -28,9 +28,17 @@
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--accent)}
     .brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:var(--shadow)}
     .navlinks{display:flex;gap:18px}
-    .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0d10;font-weight:700;transition:.2s}
+    .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0d10;font-weight:700;transition:all .3s ease;position:relative;overflow:hidden}
     .btn.ghost{background:transparent;border:1px solid var(--accent2);color:var(--accent2)}
-    .btn:hover{transform:translateY(-2px)}
+    .btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 0 20px rgba(149, 75, 246, 0.6), 0 0 40px rgba(149, 75, 246, 0.4), 0 0 60px rgba(149, 75, 246, 0.2);
+    }
+    .btn.ghost:hover{
+      box-shadow:0 0 20px rgba(209, 190, 243, 0.6), 0 0 40px rgba(209, 190, 243, 0.4), 0 0 60px rgba(209, 190, 243, 0.2);
+      border-color:var(--accent);
+      color:var(--accent);
+    }
 
     .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:70px 0}
     .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow)}
@@ -54,6 +62,30 @@
     .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 
     footer{margin:60px 0 24px;color:var(--muted);font-size:14px;text-align:center}
+
+    /* Fade-in animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .fade-in-delay {
+      transition-delay: 0.2s;
+    }
+    
+    .fade-in-delay-2 {
+      transition-delay: 0.4s;
+    }
+    
+    .fade-in-delay-3 {
+      transition-delay: 0.6s;
+    }
 
     @media (max-width:900px){
       .hero{grid-template-columns:1fr}
@@ -81,7 +113,7 @@
 
   <main class="container">
     <section class="hero">
-      <div class="card pad">
+      <div class="card pad fade-in">
         <h1>Midnight Hub</h1>
         <p class="tagline">Sleek script to boost performance on Roblox</p>
         <p class="muted">Midnight Hub is designed for script users who want a clean, reliable, and easy-to-use interface without sacrificing power. Built for convenience and compatibility, it brings together a collection of useful tools in one place no bloat, no confusion. Whether you're a casual user or a serious exploiter, Midnight Hub keeps things simple</p>
@@ -89,16 +121,16 @@
           <a class="btn" href="#projects">View script</a>
         </div>
       </div>
-      <div class="card">
+      <div class="card fade-in fade-in-delay">
         <img src="https://ik.imagekit.io/yeahblxr/Midnight%20logo?updatedAt=1756332268332" alt="Showcase image or avatar" />
       </div>
     </section>
 
     <section id="projects">
-      <h2>Midnight Scripts</h2>
-      <p class="muted">All availible Midnight scripts</p>
+      <h2 class="fade-in">Midnight Scripts</h2>
+      <p class="muted fade-in fade-in-delay">All availible Midnight scripts</p>
       <div class="grid" id="projectGrid">
-        <a class="card project" href="https://scriptblox.com/script/Universal-Script-Midnight-Hub-45236" target="_blank" rel="noopener">
+        <a class="card project fade-in" href="https://scriptblox.com/script/Universal-Script-Midnight-Hub-45236" target="_blank" rel="noopener">
           <div class="thumb" style="background-image:url('https://ik.imagekit.io/yeahblxr/image_4.png?updatedAt=1756333934598')"></div>
           <div class="content">
             <h3>Midnight Hub</h3>
@@ -109,54 +141,53 @@
               <span class="badge">Functional</span>
             </div>
           </div>
-     </a>
-          <a class="card project" href="https://scriptblox.com/script/Universal-Script-Midnight-Flight-48307" target="_blank" rel="noopener">
-    <div class="thumb" style="background-image:url('https://ik.imagekit.io/yeahblxr/image_6.png?updatedAt=1756346867105')"></div>
-    <div class="content">
-      <h3>Fly Script</h3>
-      <p class="muted"> Basically, fly GUI v3 but better GUI. Features: fly toggle, custom speed, up down</p>
-      <div class="badges">
-        <span class="badge">Free</span>
-        <span class="badge">Simple</span>
-        <span class="badge">Keyless</span>
-      </div>
-    </div>
-  </a>
-          <a class="card project" href="https://scriptblox.com/script/Universal-Script-Performance-Stats-48404" target="_blank" rel="noopener">
-    <div class="thumb" style="background-image:url('https://ik.imagekit.io/yeahblxr/image_7.png?updatedAt=1756347151755')"></div>
-    <div class="content">
-      <h3>Performace Stats</h3>
-      <p class="muted">Displays ping and fps in a sleek and simple way</p>
-      <div class="badges">
-        <span class="badge">Free</span>
-        <span class="badge">Simple</span>
-        <span class="badge">Keyless</span>
-      </div>
-    </div>
-  </a>
-          <a class="card project" href="https://scriptblox.com/script/Universal-Script-Midnight-wallwalk-49896" target="_blank" rel="noopener">
-    <div class="thumb" style="background-image:url('https://ik.imagekit.io/yeahblxr/image_5.png?updatedAt=1756346855857')"></div>
-    <div class="content">
-      <h3>Walk on walls</h3>
-      <p class="muted">Allows you to walk on walls (reset after execution)</p>
-      <div class="badges">
-        <span class="badge">Free</span>
-        <span class="badge">Simple</span>
-        <span class="badge">Keyless</span>
-      </div>
-    </div>
-  </a>
+        </a>
+        <a class="card project fade-in fade-in-delay" href="https://scriptblox.com/script/Universal-Script-Midnight-Flight-48307" target="_blank" rel="noopener">
+          <div class="thumb" style="background-image:url('https://ik.imagekit.io/yeahblxr/image_6.png?updatedAt=1756346867105')"></div>
+          <div class="content">
+            <h3>Fly Script</h3>
+            <p class="muted"> Basically, fly GUI v3 but better GUI. Features: fly toggle, custom speed, up down</p>
+            <div class="badges">
+              <span class="badge">Free</span>
+              <span class="badge">Simple</span>
+              <span class="badge">Keyless</span>
+            </div>
+          </div>
+        </a>
+        <a class="card project fade-in fade-in-delay-2" href="https://scriptblox.com/script/Universal-Script-Performance-Stats-48404" target="_blank" rel="noopener">
+          <div class="thumb" style="background-image:url('https://ik.imagekit.io/yeahblxr/image_7.png?updatedAt=1756347151755')"></div>
+          <div class="content">
+            <h3>Performace Stats</h3>
+            <p class="muted">Displays ping and fps in a sleek and simple way</p>
+            <div class="badges">
+              <span class="badge">Free</span>
+              <span class="badge">Simple</span>
+              <span class="badge">Keyless</span>
+            </div>
+          </div>
+        </a>
+        <a class="card project fade-in fade-in-delay-3" href="https://scriptblox.com/script/Universal-Script-Midnight-wallwalk-49896" target="_blank" rel="noopener">
+          <div class="thumb" style="background-image:url('https://ik.imagekit.io/yeahblxr/image_5.png?updatedAt=1756346855857')"></div>
+          <div class="content">
+            <h3>Walk on walls</h3>
+            <p class="muted">Allows you to walk on walls (reset after execution)</p>
+            <div class="badges">
+              <span class="badge">Free</span>
+              <span class="badge">Simple</span>
+              <span class="badge">Keyless</span>
+            </div>
+          </div>
         </a>
       </div>
     </section>
 
     <section id="about">
       <div class="cards">
-        <div class="card pad">
+        <div class="card pad fade-in">
           <h2>About</h2>
-          <p>I create utilities designed to provide a stable and seamless experience, ensuring that users encounter minimal crashes or issues. Every tool is developed with a focus on reliability, performance, and ease of use, so that everyone can enjoy a smooth experience without interruption. I am committed to maintaining the highest quality standards in every project, continually refining and improving my work to meet the needs of all users. Whether you’re using my utilities for everyday tasks or more advanced operations, you can trust that stability, efficiency, and user satisfaction are always the top priorities.</p>
+          <p>I create utilities designed to provide a stable and seamless experience, ensuring that users encounter minimal crashes or issues. Every tool is developed with a focus on reliability, performance, and ease of use, so that everyone can enjoy a smooth experience without interruption. I am committed to maintaining the highest quality standards in every project, continually refining and improving my work to meet the needs of all users. Whether you're using my utilities for everyday tasks or more advanced operations, you can trust that stability, efficiency, and user satisfaction are always the top priorities.</p>
         </div>
-        <div class="card pad">
+        <div class="card pad fade-in fade-in-delay">
           <h2>Features of Midnight Hub</h2>
           <ul>
             <li>Player Modifications</li>
@@ -171,7 +202,7 @@
     </section>
 
     <section id="contact">
-      <div class="card pad">
+      <div class="card pad fade-in">
         <h2>Contact</h2>
         <p>Got a question? Reach out.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
@@ -183,12 +214,13 @@
       </div>
     </section>
 
-    <footer>
+    <footer class="fade-in">
       © <span id="year"></span> Yeahblxr · Midnight Hub
     </footer>
   </main>
 
   <script>
+    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', e=>{
         const id=a.getAttribute('href');
@@ -198,7 +230,28 @@
         }
       });
     });
+    
+    // Set current year
     document.getElementById('year').textContent=new Date().getFullYear();
+    
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all elements with fade-in class
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
   </script>
 </body>
 </html>
