@@ -9,7 +9,7 @@
     * {margin:0; padding:0; box-sizing:border-box; font-family:"Poppins", sans-serif;}
     body {background:#0b0b0f; color:#fff; line-height:1.5;}
     a {text-decoration:none; color:inherit;}
-    
+
     header {
       text-align:center;
       padding:3rem 1rem;
@@ -34,13 +34,15 @@
     #projects .card {
       background:#1a1a24;
       border-radius:14px;
-      padding:1.5rem;
-      color:#e6e6e6;
+      overflow:hidden;
       box-shadow:0 2px 10px rgba(0,0,0,0.5);
       transition:transform 0.25s ease, box-shadow 0.25s ease;
       opacity:1;
+      display:flex;
+      flex-direction:column;
     }
 
+    /* Card hover glow */
     #projects .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 0 15px rgba(174, 121, 255,0.7),
@@ -48,9 +50,20 @@
     }
 
     /* Card content */
-    .card h3 {color:#c9a0ff; margin-bottom:0.5rem; font-size:1.2rem;}
-    .card p {color:#ccc; font-size:0.95rem; margin-bottom:0.75rem;}
-    
+    #projects .card img {
+      width:100%;
+      height:160px;
+      object-fit:cover;
+    }
+    #projects .card .content {
+      padding:1rem;
+      display:flex;
+      flex-direction:column;
+      flex-grow:1;
+    }
+    #projects .card h3 {color:#c9a0ff; margin-bottom:0.5rem; font-size:1.2rem;}
+    #projects .card p {color:#ccc; font-size:0.95rem; margin-bottom:0.75rem; flex-grow:1;}
+
     /* Fade-in animation */
     .fade-in {opacity:0; transform:translateY(30px); transition:opacity 0.4s ease-out, transform 0.4s ease-out;}
     .fade-in.show {opacity:1; transform:translateY(0);}
@@ -75,23 +88,35 @@
       <p class="muted">All available Midnight scripts</p>
       <div class="grid" id="projectGrid">
         <a class="card fade-in" href="https://scriptblox.com/script/Universal-Script-Midnight-Hub-45236" target="_blank" rel="noopener">
-          <h3>Midnight Hub</h3>
-          <p>Main script contains many features.</p>
+          <img src="https://ik.imagekit.io/yeahblxr/image_4.png?updatedAt=1756333934598" alt="Midnight Hub">
+          <div class="content">
+            <h3>Midnight Hub</h3>
+            <p>Main script contains many features.</p>
+          </div>
         </a>
 
         <a class="card fade-in" href="https://scriptblox.com/script/Universal-Script-Midnight-Flight-48307" target="_blank" rel="noopener">
-          <h3>Midnight Fly</h3>
-          <p>Basically, fly GUI v3 but better GUI. Features: fly toggle, custom speed, up down</p>
+          <img src="https://ik.imagekit.io/yeahblxr/image_6.png?updatedAt=1756346867105" alt="Midnight Fly">
+          <div class="content">
+            <h3>Midnight Fly</h3>
+            <p>Basically, fly GUI v3 but better GUI. Features: fly toggle, custom speed, up down</p>
+          </div>
         </a>
 
         <a class="card fade-in" href="https://scriptblox.com/script/Universal-Script-Performance-Stats-48404" target="_blank" rel="noopener">
-          <h3>Performance Stats</h3>
-          <p>Displays ping and fps in a sleek and simple way</p>
+          <img src="https://ik.imagekit.io/yeahblxr/image_7.png?updatedAt=1756347151755" alt="Performance Stats">
+          <div class="content">
+            <h3>Performance Stats</h3>
+            <p>Displays ping and fps in a sleek and simple way</p>
+          </div>
         </a>
 
         <a class="card fade-in" href="https://scriptblox.com/script/Universal-Script-Midnight-wallwalk-49896" target="_blank" rel="noopener">
-          <h3>Walk on Walls</h3>
-          <p>Allows you to walk on walls (reset after execution)</p>
+          <img src="https://ik.imagekit.io/yeahblxr/image_5.png?updatedAt=1756346855857" alt="Walk on Walls">
+          <div class="content">
+            <h3>Walk on Walls</h3>
+            <p>Allows you to walk on walls (reset after execution)</p>
+          </div>
         </a>
       </div>
     </section>
