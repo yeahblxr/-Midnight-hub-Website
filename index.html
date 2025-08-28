@@ -19,10 +19,22 @@
       --shadow:0 10px 30px rgba(0,0,0,.4);
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;overflow-x:hidden}
     a{color:var(--accent);text-decoration:none}
     a:hover{opacity:.9}
-    .container{max-width:1100px;margin:0 auto;padding:24px}
+    
+    /* Particle Animation Background */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .container{max-width:1100px;margin:0 auto;padding:24px;position:relative;z-index:1}
     header{position:sticky;top:0;backdrop-filter:saturate(150%) blur(12px);background:rgba(20,0,55,.7);border-bottom:1px solid rgba(255,255,255,.08);z-index:20}
     nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--accent)}
@@ -114,6 +126,9 @@
   </style>
 </head>
 <body>
+  <!-- Particle Animation Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
   <header>
     <div class="container">
       <nav>
@@ -236,6 +251,103 @@
   </main>
 
   <script>
+    // Particle Animation System
+    class ParticleSystem {
+      constructor() {
+        this.canvas = document.getElementById('particles-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.particleCount = 80;
+        this.connectionDistance = 120;
+        
+        this.resize();
+        this.init();
+        this.animate();
+        
+        window.addEventListener('resize', () => this.resize());
+      }
+      
+      resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+      
+      init() {
+        this.particles = [];
+        for (let i = 0; i < this.particleCount; i++) {
+          this.particles.push({
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            size: Math.random() * 2 + 1,
+            opacity: Math.random() * 0.5 + 0.2
+          });
+        }
+      }
+      
+      update() {
+        this.particles.forEach(particle => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          
+          // Bounce off edges
+          if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
+          if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+          
+          // Keep particles within bounds
+          particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
+          particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+        });
+      }
+      
+      draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Draw connections
+        for (let i = 0; i < this.particles.length; i++) {
+          for (let j = i + 1; j < this.particles.length; j++) {
+            const dx = this.particles[i].x - this.particles[j].x;
+            const dy = this.particles[i].y - this.particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < this.connectionDistance) {
+              const opacity = (1 - distance / this.connectionDistance) * 0.3;
+              this.ctx.strokeStyle = `rgba(149, 75, 246, ${opacity})`;
+              this.ctx.lineWidth = 1;
+              this.ctx.beginPath();
+              this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+              this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+              this.ctx.stroke();
+            }
+          }
+        }
+        
+        // Draw particles
+        this.particles.forEach(particle => {
+          this.ctx.beginPath();
+          this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          this.ctx.fillStyle = `rgba(209, 190, 243, ${particle.opacity})`;
+          this.ctx.fill();
+          
+          // Add glow effect
+          this.ctx.shadowColor = '#954bf6';
+          this.ctx.shadowBlur = 10;
+          this.ctx.fill();
+          this.ctx.shadowBlur = 0;
+        });
+      }
+      
+      animate() {
+        this.update();
+        this.draw();
+        requestAnimationFrame(() => this.animate());
+      }
+    }
+    
+    // Initialize particle system
+    new ParticleSystem();
+
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', e=>{
