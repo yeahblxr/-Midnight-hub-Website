@@ -49,7 +49,16 @@
     header{position:sticky;top:0;backdrop-filter:saturate(150%) blur(12px);background:rgba(20,0,55,.7);border-bottom:1px solid rgba(255,255,255,.08);z-index:100}
     nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--accent)}
-    .brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:var(--shadow)}
+    .brand .logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background-image: url('https://ik.imagekit.io/yeahblxr/midnight%20squared_fcWdpmXYR?updatedAt=1756426056141'); /* Replace with your actual image path */
+  background-size: cover; /* Ensures the image covers the entire area */
+  background-position: center; /* Centers the image */
+  box-shadow: var(--shadow);
+}
+
     .navlinks{display:flex;gap:18px}
     .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0d10;font-weight:700;transition:all .3s ease;position:relative;overflow:hidden}
     .btn.ghost{background:transparent;border:1px solid var(--accent2);color:var(--accent2)}
