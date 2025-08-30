@@ -6,20 +6,31 @@
   <title>Midnight Hub</title>
   <meta name="description" content="Sleek professional lua scripts" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#140037;      /* background */
+      --bg:#140037;
       --card:#1b004b;
-      --muted:#d1bef3;
+      --muted:#b8a5d6;
       --text:#ffffff;
-      --accent:#954bf6; /* main color */
-      --accent2:#d1bef3; /* accent */
-      --radius:18px;
-      --shadow:0 10px 30px rgba(0,0,0,.4);
+      --accent:#954bf6;
+      --accent2:#d1bef3;
+      --radius:20px;
+      --shadow:0 8px 32px rgba(0,0,0,.3), 0 4px 16px rgba(149,75,246,.1);
+      --shadow-hover:0 16px 48px rgba(0,0,0,.4), 0 8px 24px rgba(149,75,246,.2);
+      --glow:0 0 20px rgba(149,75,246,.3);
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;overflow-x:hidden}
+    html,body{
+      margin:0;
+      padding:0;
+      background:linear-gradient(135deg, #140037 0%, #1a0040 50%, #0f002a 100%);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      line-height:1.6;
+      overflow-x:hidden;
+      font-size:15px;
+    }
     a{color:var(--accent);text-decoration:none}
     a:hover{opacity:.9}
     
@@ -41,82 +52,194 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: var(--bg);
-      z-index: -2;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(149,75,246,.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(209,190,243,.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(149,75,246,.08) 0%, transparent 50%);
+      z-index: -1;
     }
     
     .container{max-width:1100px;margin:0 auto;padding:24px;position:relative;z-index:10}
-    header{position:sticky;top:0;backdrop-filter:saturate(150%) blur(12px);background:rgba(20,0,55,.7);border-bottom:1px solid rgba(255,255,255,.08);z-index:100}
+    header{position:sticky;top:0;backdrop-filter:saturate(150%) blur(16px);background:rgba(20,0,55,.8);border-bottom:1px solid rgba(255,255,255,.08);z-index:100}
     nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--accent)}
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      color:var(--accent);
+      font-family:'Space Grotesk',sans-serif;
+      font-size:18px;
+    }
     .brand .logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background-image: url('https://ik.imagekit.io/yeahblxr/midnight%20squared_fcWdpmXYR?updatedAt=1756426056141'); /* Replace with your actual image path */
-  background-size: cover; /* Ensures the image covers the entire area */
-  background-position: center; /* Centers the image */
-  box-shadow: var(--shadow);
-}
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background-image: url('https://ik.imagekit.io/yeahblxr/midnight%20squared_fcWdpmXYR?updatedAt=1756426056141');
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow);
+      transition: all .3s ease;
+    }
+    .brand:hover .logo {
+      box-shadow: var(--shadow-hover), var(--glow);
+      transform: scale(1.05);
+    }
 
     .navlinks{display:flex;gap:18px}
-    .btn{display:inline-block;padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0d10;font-weight:700;transition:all .3s ease;position:relative;overflow:hidden}
-    .btn.ghost{background:transparent;border:1px solid var(--accent2);color:var(--accent2)}
+    .btn{
+      display:inline-block;
+      padding:12px 18px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#0b0d10;
+      font-weight:700;
+      font-size:14px;
+      transition:all .3s ease;
+      position:relative;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .btn.ghost{
+      background:transparent;
+      border:1px solid rgba(209,190,243,.4);
+      color:var(--accent2);
+      box-shadow:0 4px 16px rgba(0,0,0,.2);
+    }
     .btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 0 20px rgba(149, 75, 246, 0.6), 0 0 40px rgba(149, 75, 246, 0.4), 0 0 60px rgba(149, 75, 246, 0.2);
+      transform:translateY(-3px);
+      box-shadow:var(--shadow-hover), var(--glow);
     }
     .btn.ghost:hover{
-      box-shadow:0 0 20px rgba(209, 190, 243, 0.6), 0 0 40px rgba(209, 190, 243, 0.4), 0 0 60px rgba(209, 190, 243, 0.2);
+      box-shadow:var(--shadow-hover), 0 0 25px rgba(209,190,243,.4);
       border-color:var(--accent);
       color:var(--accent);
+      background:rgba(149,75,246,.05);
     }
 
     main{position:relative;z-index:10}
-    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:70px 0}
-    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow);transition:box-shadow .3s ease;position:relative;z-index:10}
-    .card.pad{padding:32px}
-    .card:hover {
-      box-shadow: 
-        0 0 15px rgba(149, 75, 246, 0.3),
-        0 0 30px rgba(149, 75, 246, 0.2),
-        0 10px 30px rgba(0, 0, 0, 0.4);
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;padding:80px 0}
+    .card{
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      transition:all .4s cubic-bezier(.4,0,.2,1);
+      position:relative;
+      z-index:10;
+      backdrop-filter:blur(10px);
     }
-    h1{font-size:clamp(32px,4vw,56px);line-height:1.1;margin:0 0 14px;color:var(--accent)}
-    h2{font-size:clamp(24px,3vw,36px);margin:0 0 14px;color:var(--accent2)}
-    p.muted{color:var(--muted)}
-    .tagline{font-size:20px;color:var(--muted);margin:10px 0 22px}
-    .hero img{width:100%;height:auto;border-radius:var(--radius);display:block}
+    .card.pad{padding:36px}
+    .card:hover {
+      box-shadow: var(--shadow-hover), var(--glow);
+      border-color:rgba(149,75,246,.2);
+      transform:translateY(-2px);
+    }
+    
+    /* Typography Hierarchy */
+    h1{
+      font-size:clamp(36px,4.5vw,64px);
+      line-height:1.1;
+      margin:0 0 16px;
+      color:var(--accent);
+      font-family:'Space Grotesk',sans-serif;
+      font-weight:700;
+      text-shadow:0 0 30px rgba(149,75,246,.3);
+    }
+    h2{
+      font-size:clamp(28px,3.5vw,42px);
+      margin:0 0 16px;
+      color:var(--accent2);
+      font-family:'Space Grotesk',sans-serif;
+      font-weight:600;
+    }
+    h3{
+      font-size:20px;
+      margin:0 0 8px;
+      color:var(--accent);
+      font-weight:600;
+    }
+    p{font-size:15px;line-height:1.7}
+    p.muted{color:var(--muted);font-size:14px}
+    .tagline{
+      font-size:22px;
+      color:var(--muted);
+      margin:12px 0 24px;
+      font-weight:500;
+    }
+    .hero img{
+      width:100%;
+      height:auto;
+      border-radius:var(--radius);
+      display:block;
+      box-shadow:var(--shadow);
+      transition:all .4s ease;
+    }
+    .hero .card:hover img{
+      box-shadow:var(--shadow-hover), var(--glow);
+    }
 
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px}
     .project{
-      transition: transform .3s ease, box-shadow .3s ease;
+      transition: all .4s cubic-bezier(.4,0,.2,1);
       position: relative;
+      overflow:hidden;
     }
     .project:hover{
-      transform: translateY(-5px);
-      box-shadow: 
-        0 0 20px rgba(149, 75, 246, 0.4),
-        0 0 40px rgba(149, 75, 246, 0.3),
-        0 0 60px rgba(149, 75, 246, 0.2),
-        0 20px 40px rgba(0, 0, 0, 0.4);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-hover), var(--glow);
+      border-color:rgba(149,75,246,.3);
     }
-    .project .thumb{height:160px;border-bottom:1px solid rgba(255,255,255,.08);border-top-left-radius:var(--radius);border-top-right-radius:var(--radius);background:#0b0c10 center/cover no-repeat}
-    .project .content{padding:16px}
-    .project h3{margin:0 0 6px;font-size:18px;color:var(--accent)}
-    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-    .badge{padding:4px 10px;border:1px solid var(--accent2);border-radius:999px;font-size:12px;color:var(--accent2)}
+    .project .thumb{
+      height:180px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      border-top-left-radius:var(--radius);
+      border-top-right-radius:var(--radius);
+      background:#0b0c10 center/cover no-repeat;
+      position:relative;
+      overflow:hidden;
+    }
+    .project .thumb::after{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:linear-gradient(45deg, rgba(149,75,246,.1), transparent);
+      opacity:0;
+      transition:opacity .3s ease;
+    }
+    .project:hover .thumb::after{opacity:1}
+    .project .content{padding:20px}
+    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .badge{
+      padding:6px 12px;
+      border:1px solid rgba(209,190,243,.3);
+      border-radius:999px;
+      font-size:11px;
+      color:var(--accent2);
+      background:rgba(209,190,243,.05);
+      font-weight:500;
+    }
 
-    section{margin:60px 0;position:relative;z-index:10}
-    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    section{margin:80px 0;position:relative;z-index:10}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
 
-    footer{margin:60px 0 24px;color:var(--muted);font-size:14px;text-align:center;position:relative;z-index:10}
+    footer{
+      margin:80px 0 32px;
+      color:var(--muted);
+      font-size:14px;
+      text-align:center;
+      position:relative;
+      z-index:10;
+    }
 
-    /* Fade-in animations */
+    /* Enhanced Fade-in animations */
     .fade-in {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(.4,0,.2,1);
     }
     
     .fade-in.visible {
@@ -125,24 +248,27 @@
     }
     
     .fade-in-delay {
-      transition-delay: 0.2s;
+      transition-delay: 0.15s;
     }
     
     .fade-in-delay-2 {
-      transition-delay: 0.4s;
+      transition-delay: 0.3s;
     }
     
     .fade-in-delay-3 {
-      transition-delay: 0.6s;
+      transition-delay: 0.45s;
     }
 
     @media (max-width:900px){
-      .hero{grid-template-columns:1fr}
-      .grid{grid-template-columns:1fr 1fr}
+      .hero{grid-template-columns:1fr;gap:24px}
+      .grid{grid-template-columns:1fr 1fr;gap:20px}
       .cards{grid-template-columns:1fr}
+      .card.pad{padding:28px}
     }
     @media (max-width:600px){
       .grid{grid-template-columns:1fr}
+      .navlinks{gap:12px}
+      .btn{padding:10px 14px;font-size:13px}
     }
   </style>
 </head>
@@ -169,7 +295,7 @@
         <h1>Midnight Hub</h1>
         <p class="tagline">Sleek script to boost performance on Roblox</p>
         <p class="muted">Midnight Hub is designed for script users who want a clean, reliable, and easy-to-use interface without sacrificing power. Built for convenience and compatibility, it brings together a collection of useful tools in one place no bloat, no confusion. Whether you're a casual user or a serious exploiter, Midnight Hub keeps things simple</p>
-        <div style="display:flex;gap:12px;margin-top:14px">
+        <div style="display:flex;gap:14px;margin-top:18px">
           <a class="btn" href="#projects">View scripts</a>
         </div>
       </div>
@@ -180,7 +306,7 @@
 
     <section id="projects">
       <h2 class="fade-in">Midnight Scripts</h2>
-      <p class="muted fade-in fade-in-delay">All availible Midnight scripts</p>
+      <p class="muted fade-in fade-in-delay">All available Midnight scripts</p>
       <div class="grid" id="projectGrid">
         <a class="card project fade-in" href="Midnighthub.html" target="_blank" rel="noopener">
           <div class="thumb" style="background-image:url('https://ik.imagekit.io/yeahblxr/image_4.png?updatedAt=1756333934598')"></div>
@@ -198,7 +324,7 @@
           <div class="thumb" style="background-image:url('https://ik.imagekit.io/yeahblxr/Screenshot_20250827_210416_Roblox.jpg?updatedAt=1756424116155')"></div>
           <div class="content">
             <h3>Fly Script</h3>
-            <p class="muted"> Basically, fly GUI v3 but better GUI. Features: fly toggle, custom speed, up down</p>
+            <p class="muted">Basically, fly GUI v3 but better GUI. Features: fly toggle, custom speed, up down</p>
             <div class="badges">
               <span class="badge">Free</span>
               <span class="badge">Simple</span>
@@ -209,7 +335,7 @@
         <a class="card project fade-in fade-in-delay-2" href="Performancestats.html" target="_blank" rel="noopener">
           <div class="thumb" style="background-image:url('https://ik.imagekit.io/yeahblxr/Screenshot_20250827_211114_Roblox2.jpg?updatedAt=1756424116130')"></div>
           <div class="content">
-            <h3>Performace Stats</h3>
+            <h3>Performance Stats</h3>
             <p class="muted">Displays ping and fps in a sleek and simple way</p>
             <div class="badges">
               <span class="badge">Free</span>
@@ -257,7 +383,7 @@
       <div class="card pad fade-in">
         <h2>Contact</h2>
         <p>Got a question? Reach out.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
           <a class="btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=yeahblxr@gmail.com">Email Me</a>
           <a class="btn ghost" href="https://github.com/yeahblxr/-Midnight-hub" target="_blank" rel="noopener">Github</a>
           <a class="btn ghost" href="https://www.tiktok.com/@yeahblxr" target="_blank" rel="noopener">Tiktok</a>
@@ -272,14 +398,15 @@
   </main>
 
   <script>
-    // Particle Animation System
+    // Enhanced Particle Animation System
     class ParticleSystem {
       constructor() {
         this.canvas = document.getElementById('particles-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.particles = [];
-        this.particleCount = 60;
-        this.connectionDistance = 120;
+        this.particleCount = 80;
+        this.connectionDistance = 150;
+        this.mouse = { x: 0, y: 0 };
         
         this.resize();
         this.init();
@@ -288,6 +415,12 @@
         window.addEventListener('resize', () => {
           this.resize();
           this.init();
+        });
+        
+        // Mouse interaction
+        window.addEventListener('mousemove', (e) => {
+          this.mouse.x = e.clientX;
+          this.mouse.y = e.clientY;
         });
       }
       
@@ -302,39 +435,60 @@
           this.particles.push({
             x: Math.random() * this.canvas.width,
             y: Math.random() * this.canvas.height,
-            vx: (Math.random() - 0.5) * 1,
-            vy: (Math.random() - 0.5) * 1,
-            size: Math.random() * 4 + 2,
-            opacity: Math.random() * 0.8 + 0.2,
-            hue: Math.random() * 60 + 270 // Purple to pink range
+            vx: (Math.random() - 0.5) * 0.8,
+            vy: (Math.random() - 0.5) * 0.8,
+            size: Math.random() * 3 + 1,
+            opacity: Math.random() * 0.6 + 0.2,
+            hue: Math.random() * 40 + 260, // Purple to pink range
+            twinkle: Math.random() * Math.PI * 2,
+            twinkleSpeed: Math.random() * 0.02 + 0.01
           });
         }
       }
       
       update() {
         this.particles.forEach(particle => {
+          // Mouse attraction
+          const dx = this.mouse.x - particle.x;
+          const dy = this.mouse.y - particle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 200) {
+            const force = (200 - distance) / 200;
+            particle.vx += (dx / distance) * force * 0.01;
+            particle.vy += (dy / distance) * force * 0.01;
+          }
+          
           particle.x += particle.vx;
           particle.y += particle.vy;
           
-          // Bounce off edges
+          // Twinkle effect
+          particle.twinkle += particle.twinkleSpeed;
+          particle.opacity = 0.3 + Math.sin(particle.twinkle) * 0.3;
+          
+          // Bounce off edges with damping
           if (particle.x <= 0 || particle.x >= this.canvas.width) {
-            particle.vx *= -1;
+            particle.vx *= -0.8;
             particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
           }
           if (particle.y <= 0 || particle.y >= this.canvas.height) {
-            particle.vy *= -1;
+            particle.vy *= -0.8;
             particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
           }
+          
+          // Velocity damping
+          particle.vx *= 0.999;
+          particle.vy *= 0.999;
         });
       }
       
       draw() {
-        // Clear canvas with slight transparency for trail effect
-        this.ctx.fillStyle = 'rgba(20, 0, 55, 0.05)';
+        // Clear canvas with fade effect
+        this.ctx.fillStyle = 'rgba(20, 0, 55, 0.03)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Draw connections first (behind particles)
-        this.ctx.lineWidth = 1;
+        // Draw connections
+        this.ctx.lineWidth = 0.8;
         for (let i = 0; i < this.particles.length; i++) {
           for (let j = i + 1; j < this.particles.length; j++) {
             const dx = this.particles[i].x - this.particles[j].x;
@@ -342,7 +496,7 @@
             const distance = Math.sqrt(dx * dx + dy * dy);
             
             if (distance < this.connectionDistance) {
-              const opacity = (1 - distance / this.connectionDistance) * 0.4;
+              const opacity = (1 - distance / this.connectionDistance) * 0.3;
               this.ctx.strokeStyle = `rgba(149, 75, 246, ${opacity})`;
               this.ctx.beginPath();
               this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
@@ -352,32 +506,32 @@
           }
         }
         
-        // Draw particles
+        // Draw particles with enhanced glow
         this.particles.forEach(particle => {
           // Outer glow
           const gradient = this.ctx.createRadialGradient(
             particle.x, particle.y, 0,
-            particle.x, particle.y, particle.size * 3
+            particle.x, particle.y, particle.size * 4
           );
-          gradient.addColorStop(0, `hsla(${particle.hue}, 70%, 70%, ${particle.opacity})`);
-          gradient.addColorStop(0.5, `hsla(${particle.hue}, 70%, 60%, ${particle.opacity * 0.3})`);
-          gradient.addColorStop(1, `hsla(${particle.hue}, 70%, 50%, 0)`);
+          gradient.addColorStop(0, `hsla(${particle.hue}, 80%, 70%, ${particle.opacity * 0.8})`);
+          gradient.addColorStop(0.3, `hsla(${particle.hue}, 70%, 60%, ${particle.opacity * 0.4})`);
+          gradient.addColorStop(1, `hsla(${particle.hue}, 60%, 50%, 0)`);
           
           this.ctx.fillStyle = gradient;
           this.ctx.beginPath();
-          this.ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2);
+          this.ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
           this.ctx.fill();
           
           // Main particle
-          this.ctx.fillStyle = `hsla(${particle.hue}, 80%, 80%, ${particle.opacity})`;
+          this.ctx.fillStyle = `hsla(${particle.hue}, 90%, 80%, ${particle.opacity})`;
           this.ctx.beginPath();
           this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
           this.ctx.fill();
           
           // Bright center
-          this.ctx.fillStyle = `hsla(${particle.hue}, 90%, 90%, ${particle.opacity * 0.8})`;
+          this.ctx.fillStyle = `hsla(${particle.hue}, 100%, 90%, ${particle.opacity * 0.9})`;
           this.ctx.beginPath();
-          this.ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2);
+          this.ctx.arc(particle.x, particle.y, particle.size * 0.3, 0, Math.PI * 2);
           this.ctx.fill();
         });
       }
@@ -408,10 +562,10 @@
     // Set current year
     document.getElementById('year').textContent=new Date().getFullYear();
     
-    // Intersection Observer for fade-in animations
+    // Enhanced Intersection Observer for fade-in animations
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      rootMargin: '0px 0px -80px 0px'
     };
     
     const observer = new IntersectionObserver((entries) => {
