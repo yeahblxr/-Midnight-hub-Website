@@ -24,7 +24,7 @@
     html,body{
       margin:0;
       padding:0;
-      background:linear-gradient(135deg, #140037 0%, #1a0040 50%, #0f002a 100%);
+      background:linear-gradient(135deg, #0a001a 0%, #1a0040 50%, #0f002a 100%);
       color:var(--text);
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       line-height:1.6;
@@ -435,8 +435,8 @@
           this.particles.push({
             x: Math.random() * this.canvas.width,
             y: Math.random() * this.canvas.height,
-            vx: (Math.random() - 0.5) * 0.8,
-            vy: (Math.random() - 0.5) * 0.8,
+            vx: (Math.random() - 0.5) * 1.2,
+            vy: (Math.random() - 0.5) * 1.2,
             size: Math.random() * 3 + 1,
             opacity: Math.random() * 0.6 + 0.2,
             hue: Math.random() * 40 + 260, // Purple to pink range
@@ -448,44 +448,36 @@
       
       update() {
         this.particles.forEach(particle => {
-          // Mouse attraction
+          // Continuous movement
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          
+          // Mouse attraction (optional - makes particles react to mouse)
           const dx = this.mouse.x - particle.x;
           const dy = this.mouse.y - particle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
           if (distance < 200) {
             const force = (200 - distance) / 200;
-            particle.vx += (dx / distance) * force * 0.01;
-            particle.vy += (dy / distance) * force * 0.01;
+            particle.vx += (dx / distance) * force * 0.005;
+            particle.vy += (dy / distance) * force * 0.005;
           }
-          
-          particle.x += particle.vx;
-          particle.y += particle.vy;
           
           // Twinkle effect
           particle.twinkle += particle.twinkleSpeed;
           particle.opacity = 0.3 + Math.sin(particle.twinkle) * 0.3;
           
-          // Bounce off edges with damping
-          if (particle.x <= 0 || particle.x >= this.canvas.width) {
-            particle.vx *= -0.8;
-            particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
-          }
-          if (particle.y <= 0 || particle.y >= this.canvas.height) {
-            particle.vy *= -0.8;
-            particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
-          }
-          
-          // Velocity damping
-          particle.vx *= 0.999;
-          particle.vy *= 0.999;
+          // Wrap around edges instead of bouncing
+          if (particle.x < 0) particle.x = this.canvas.width;
+          if (particle.x > this.canvas.width) particle.x = 0;
+          if (particle.y < 0) particle.y = this.canvas.height;
+          if (particle.y > this.canvas.height) particle.y = 0;
         });
       }
       
       draw() {
-        // Clear canvas with fade effect
-        this.ctx.fillStyle = 'rgba(20, 0, 55, 0.03)';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        // Clear canvas completely (no trail effect)
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
         // Draw connections
         this.ctx.lineWidth = 0.8;
