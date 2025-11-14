@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Escape The Tsunami - Midnight Hub</title>
+  <meta name="description" content="Sleek professional lua scripts">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#140037;      /* background */
+      --card:#1b004b;
+      --muted:#d1bef3;
+      --text:#ffffff;
+      --accent:#954bf6; /* main color */
+      --accent2:#d1bef3; /* accent */
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.4);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;overflow-x:hidden}
+    
+    /* Particle Animation Background */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      z-index: -2;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      width: 100%;
+      max-width: 650px;
+      margin: 20px;
+      position: relative;
+      z-index: 10;
+      transition: box-shadow .3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 
+        0 0 15px rgba(149, 75, 246, 0.3),
+        0 0 30px rgba(149, 75, 246, 0.2),
+        0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .card-header h3 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 32px);
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .status {
+      font-size: 14px;
+      color: #00ff88;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status::before {
+      content: '●';
+      color: #00ff88;
+    }
+
+    .code-box {
+      background: rgba(11, 13, 16, 0.8);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      color: var(--muted);
+      font-size: 14px;
+      position: relative;
+      overflow-x: auto;
+      margin-bottom: 12px;
+      transition: border-color 0.3s ease;
+    }
+
+    .code-box:hover {
+      border-color: rgba(149, 75, 246, 0.3);
+    }
+
+    .copy-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.3s ease;
+      font-size: 18px;
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(149, 75, 246, 0.1);
+    }
+    
+    .copy-icon:hover { 
+      color: var(--accent);
+      background: rgba(149, 75, 246, 0.2);
+      transform: scale(1.1);
+    }
+
+    .hint {
+      font-size: 12px;
+      margin-bottom: 20px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #0b0d10;
+      cursor: pointer;
+      transition: all .3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(149, 75, 246, 0.6), 0 0 40px rgba(149, 75, 246, 0.4), 0 0 60px rgba(149, 75, 246, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* Success animation */
+    .success-message {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #00ff88, #00cc6a);
+      color: #0b0d10;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+    }
+
+    .success-message.show {
+      transform: translateX(0);
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        margin: 10px;
+        padding: 24px;
+      }
+      
+      .card-header {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle Animation Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <div class="card fade-in">
+    <div class="card-header">
+      <h3>Escape The Tsunami</h3>
+      <span class="status">Ready to Execute</span>
+    </div>
+
+    <div class="code-box" id="codeBox">
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/yeahblxr/Scripts/refs/heads/main/Escape-the-tsunami"))()
+      <span class="copy-icon" onclick="copyCode()" title="Copy to clipboard">📋</span>
+    </div>
+    <p class="hint">Click the copy button or the button below to copy the Script</p>
+
+    <button class="btn" onclick="copyCode()">Copy Script</button>
+  </div>
+
+  <!-- Success message -->
+  <div class="success-message" id="successMessage">
+    Script copied to clipboard! ✨
+  </div>
+
+  <script>
+    // Particle Animation System
+    class ParticleSystem {
+      constructor() {
+        this.canvas = document.getElementById('particles-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.particleCount = 60;
+        this.connectionDistance = 120;
+        
+        this.resize();
+        this.init();
+        this.animate();
+        
+        window.addEventListener('resize', () => {
+          this.resize();
+          this.init();
+        });
+      }
+      
+      resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+      
+      init() {
+        this.particles = [];
+        for (let i = 0; i < this.particleCount; i++) {
+          this.particles.push({
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            vx: (Math.random() - 0.5) * 1,
+            vy: (Math.random() - 0.5) * 1,
+            size: Math.random() * 4 + 2,
+            opacity: Math.random() * 0.8 + 0.2,
+            hue: Math.random() * 60 + 270 // Purple to pink range
+          });
+        }
+      }
+      
+      update() {
+        this.particles.forEach(particle => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          
+          // Bounce off edges
+          if (particle.x <= 0 || particle.x >= this.canvas.width) {
+            particle.vx *= -1;
+            particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
+          }
+          if (particle.y <= 0 || particle.y >= this.canvas.height) {
+            particle.vy *= -1;
+            particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+          }
+        });
+      }
+      
+      draw() {
+        // Clear canvas with slight transparency for trail effect
+        this.ctx.fillStyle = 'rgba(20, 0, 55, 0.05)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Draw connections first (behind particles)
+        this.ctx.lineWidth = 1;
+        for (let i = 0; i < this.particles.length; i++) {
+          for (let j = i + 1; j < this.particles.length; j++) {
+            const dx = this.particles[i].x - this.particles[j].x;
+            const dy = this.particles[i].y - this.particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < this.connectionDistance) {
+              const opacity = (1 - distance / this.connectionDistance) * 0.4;
+              this.ctx.strokeStyle = `rgba(149, 75, 246, ${opacity})`;
+              this.ctx.beginPath();
+              this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+              this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+              this.ctx.stroke();
+            }
+          }
+        }
+        
+        // Draw particles
+        this.particles.forEach(particle => {
+          // Outer glow
+          const gradient = this.ctx.createRadialGradient(
+            particle.x, particle.y, 0,
+            particle.x, particle.y, particle.size * 3
+          );
+          gradient.addColorStop(0, `hsla(${particle.hue}, 70%, 70%, ${particle.opacity})`);
+          gradient.addColorStop(0.5, `hsla(${particle.hue}, 70%, 60%, ${particle.opacity * 0.3})`);
+          gradient.addColorStop(1, `hsla(${particle.hue}, 70%, 50%, 0)`);
+          
+          this.ctx.fillStyle = gradient;
+          this.ctx.beginPath();
+          this.ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2);
+          this.ctx.fill();
+          
+          // Main particle
+          this.ctx.fillStyle = `hsla(${particle.hue}, 80%, 80%, ${particle.opacity})`;
+          this.ctx.beginPath();
+          this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          this.ctx.fill();
+          
+          // Bright center
+          this.ctx.fillStyle = `hsla(${particle.hue}, 90%, 90%, ${particle.opacity * 0.8})`;
+          this.ctx.beginPath();
+          this.ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2);
+          this.ctx.fill();
+        });
+      }
+      
+      animate() {
+        this.update();
+        this.draw();
+        requestAnimationFrame(() => this.animate());
+      }
+    }
+    
+    // Initialize particle system when page loads
+    window.addEventListener('load', () => {
+      new ParticleSystem();
+    });
+
+    function copyCode() {
+      const codeText = `loadstring(game:HttpGet("https://raw.githubusercontent.com/yeahblxr/Scripts/refs/heads/main/Escape-the-tsunami"))()`;
+      
+      navigator.clipboard.writeText(codeText).then(() => {
+        // Show success message
+        const successMessage = document.getElementById('successMessage');
+        successMessage.classList.add('show');
+        
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+          successMessage.classList.remove('show');
+        }, 3000);
+      }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = codeText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        // Show success message
+        const successMessage = document.getElementById('successMessage');
+        successMessage.classList.add('show');
+        
+        setTimeout(() => {
+          successMessage.classList.remove('show');
+        }, 3000);
+      });
+    }
+  </script>
+</body>
+</html>
