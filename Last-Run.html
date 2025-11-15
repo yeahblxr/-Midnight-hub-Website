@@ -141,8 +141,15 @@ body {
   font-family: "Courier New", monospace;
   color: var(--muted);
   position:relative;
-}
 
+  /* FIXES LONG CODE OVERFLOW */
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: break-word;
+
+  max-width: 100%;
+}
+   
 .copy-icon {
   position:absolute;
   top:10px;
