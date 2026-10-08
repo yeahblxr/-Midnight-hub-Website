@@ -236,7 +236,8 @@ body {
     <div class="status" id="statusText">Ready to Execute</div>
 
     <div class="code-box" id="codeBox">
-      <span id="codeText">loadstring(game:HttpGet("https://raw.githubusercontent.com/yeahblxr/-Midnight-hub/refs/heads/main/Midnight%20Hub"))()</span>
+      <span id="codeText">getgenv().SCRIPT_KEY = "KeyHere"
+loadstring(game:HttpGet("https://api.jnkie.com/api/v1/luascripts/public/2b0a6c22ae5b382f53e7dfc0c4018d33969fe2e0b1c4946e67abbcb616df4f24/download"))()</span>
       <span class="copy-icon" onclick="copyCode()">📋</span>
     </div>
 
@@ -255,7 +256,8 @@ body {
 const PAGE_TITLE = "Main Script - Midnight Hub";
 const CARD_TITLE = "Midnight Hub";
 const STATUS_TEXT = "Ready to Execute";
-const SCRIPT_CODE = `loadstring(game:HttpGet("https://raw.githubusercontent.com/yeahblxr/-Midnight-hub/refs/heads/main/Midnight%20Hub"))()`;
+const SCRIPT_CODE = `getgenv().SCRIPT_KEY = "KeyHere"
+loadstring(game:HttpGet("https://api.jnkie.com/api/v1/luascripts/public/2b0a6c22ae5b382f53e7dfc0c4018d33969fe2e0b1c4946e67abbcb616df4f24/download"))()`;
 
 /* Apply variables */
 document.getElementById("pageTitle").innerText = PAGE_TITLE;
