@@ -3,362 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="pageTitle">Last Run - Midnight Hub</title>
-
-<style>
-/* ============================================================
-   Midnight Hub Theme Variables (EASY EDIT)
-   ============================================================ */
-:root {
-  --bg:#140037;
-  --card:#1b004b;
-  --muted:#b8a5d6;
-  --text:#ffffff;
-  --accent:#954bf6;
-  --accent2:#d1bef3;
-  --radius:20px;
-  --shadow:0 8px 32px rgba(0,0,0,.3), 0 4px 16px rgba(149,75,246,.1);
-  --shadow-hover:0 16px 48px rgba(0,0,0,.4), 0 8px 24px rgba(149,75,246,.2);
-  --glow:0 0 20px rgba(149,75,246,.3);
-}
-
-/* ============================================================
-   BASIC RESET + BODY
-   ============================================================ */
-
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Inter, sans-serif;
-  height: 100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-  position:relative;
-}
-
-/* ============================================================
-   FULL MIDNIGHT HUB BACKGROUND
-   (Gradient Layers + Blurred Nebula Blobs + Vignette)
-   ============================================================ */
-
-.bg-layer {
-  position:fixed;
-  width:100%;
-  height:100%;
-  top:0; left:0;
-  z-index:-10;
-  pointer-events:none;
-}
-
-/* deep cosmic gradient */
-.bg-gradient {
-  background: radial-gradient(circle at top, #2b0077 0%, #140037 60%, #0a001f 100%);
-}
-
-/* glowing nebula blobs */
-.blob {
-  position:absolute;
-  width:600px;
-  height:600px;
-  background: radial-gradient(circle, rgba(149,75,246,0.35), rgba(70,0,140,0));
-  filter: blur(120px);
-  animation: float 14s ease-in-out infinite alternate;
-}
-
-.blob:nth-child(1) { top: -120px; left:-120px; animation-duration:16s; }
-.blob:nth-child(2) { bottom:-180px; right:-150px; animation-duration:13s; background: radial-gradient(circle, rgba(209,190,243,0.25), rgba(70,0,140,0)); }
-.blob:nth-child(3) { top:40%; left:60%; animation-duration:18s; }
-
-/* soft vignette */
-.vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, transparent 60%, rgba(0,0,0,0.5));
-  z-index:-5;
-}
-
-/* floating animation */
-@keyframes float {
-  0% { transform:translateY(0px) translateX(0px); }
-  100% { transform:translateY(40px) translateX(40px); }
-}
-
-/* ============================================================
-   PARTICLE SYSTEM CANVAS
-   ============================================================ */
-#particles-canvas {
-  position:fixed;
-  width:100%;
-  height:100%;
-  top:0; left:0;
-  z-index:-1;
-  pointer-events:none;
-}
-
-/* ============================================================
-   CARD
-   ============================================================ */
-.card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 32px;
-  width: 90%;
-  max-width: 550px;
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(4px);
-  animation: fadeUp 0.7s ease forwards;
-  opacity:0;
-}
-
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(25px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-.card h3 {
-  color: var(--accent);
-  margin-bottom:10px;
-  font-size:32px;
-}
-
-.status {
-  font-size:14px;
-  color:#00ff88;
-  margin-bottom:22px;
-}
-
-/* ============================================================
-   CODE BOX
-   ============================================================ */
-.code-box {
-  background: rgba(0,0,0,0.35);
-  padding:18px;
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  font-family: "Courier New", monospace;
-  color: var(--muted);
-  position:relative;
-
-  /* FIXES LONG CODE OVERFLOW */
-  white-space: pre-wrap;
-  word-break: break-all;
-  overflow-wrap: break-word;
-
-  max-width: 100%;
-}
-   
-.copy-icon {
-  position:absolute;
-  top:10px;
-  right:12px;
-  cursor:pointer;
-  font-size:18px;
-  color:var(--muted);
-  transition:0.2s;
-}
-
-.copy-icon:hover {
-  color:var(--accent);
-  transform:scale(1.1);
-}
-
-/* ============================================================
-   BUTTON
-   ============================================================ */
-.btn {
-  margin-top:18px;
-  width:100%;
-  padding:15px 20px;
-  font-size:16px;
-  font-weight:700;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color:#0b0d10;
-  transition:0.2s;
-}
-
-.btn:hover {
-  transform:translateY(-2px);
-  box-shadow:0 0 25px rgba(149,75,246,0.55);
-}
-
-/* ============================================================
-   SUCCESS POPUP
-   ============================================================ */
-.success-message {
-  position: fixed;
-  top:20px;
-  right:20px;
-  background: linear-gradient(135deg, #00ff88, #00cc66);
-  color:#000;
-  padding:10px 18px;
-  border-radius:10px;
-  font-weight:600;
-  transform:translateX(200%);
-  transition:transform 0.35s ease;
-  box-shadow:0 10px 25px rgba(0,255,150,0.3);
-  z-index:20;
-}
-
-.success-message.show {
-  transform:translateX(0%);
-}
-</style>
+<title>Walk on Walls | Midnight Hub</title>
+<meta name="description" content="Walk on walls in any game. Reset your character after executing to get started. Free from Midnight Hub.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: {
+    sans: ['Inter', 'system-ui', 'sans-serif'],
+    mono: ['JetBrains Mono', 'ui-monospace', 'monospace']
+  } } } };
+</script>
+<link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="font-sans">
 
-<!-- ============================================================
-     MIDNIGHT HUB BACKGROUND ELEMENTS
-     ============================================================ -->
-<div class="bg-layer bg-gradient"></div>
+<div class="bg" aria-hidden="true"><div class="blob"></div><div class="blob"></div></div>
+<canvas id="particles" aria-hidden="true"></canvas>
 
-<div class="bg-layer">
-  <div class="blob"></div>
-  <div class="blob"></div>
-  <div class="blob"></div>
-</div>
-
-<div class="vignette"></div>
-
-<canvas id="particles-canvas"></canvas>
-
-<!-- ============================================================
-     CARD CONTENT
-     ============================================================ -->
-<div class="card">
-    <h3 id="cardTitle">Last Run</h3>
-    <div class="status" id="statusText">Ready to Execute</div>
-
-    <div class="code-box" id="codeBox">
-      <span id="codeText">loadstring(game:HttpGet("https://raw.githubusercontent.com/yeahblxr/Scripts/refs/heads/main/Last-Run.lua"))()</span>
-      <span class="copy-icon" onclick="copyCode()">📋</span>
+<header class="sticky top-0 z-40 border-b border-slate-800/50 bg-[#140037]/70 backdrop-blur-md">
+  <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-8">
+    <a href="index.html" class="text-lg font-bold tracking-tight text-white transition-colors duration-200 hover:text-violet-300">Midnight Hub</a>
+    <div class="flex items-center gap-2 rounded-full border border-slate-700/50 bg-slate-900/60 px-3 py-1.5 text-sm text-slate-300">
+      <span class="pulse-dot"></span> Ready to execute
     </div>
+  </div>
+</header>
 
-    <button class="btn" onclick="copyCode()">Copy Script</button>
-</div>
+<main id="top">
+  <!-- Script -->
+  <section class="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
+    <div class="mx-auto max-w-3xl">
+      <h1 class="text-4xl font-extrabold leading-tight tracking-tight text-white md:text-6xl">Walk on Walls.</h1>
+      <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-300">Walk on walls in any game. Reset your character after executing to get started. No key needed. Copy the loader below and run it in your executor.</p>
 
-<div class="success-message" id="successMessage">Script copied! ✨</div>
+      <div class="script-window glass mt-10 shadow-xl">
+        <div class="window-bar">
+          <i></i><i></i><i></i>
+          <span class="ml-2 font-mono text-xs text-slate-400">walk-on-walls.lua</span>
+        </div>
+        <pre class="code" id="code"><span class="fn">loadstring</span>(game:<span class="fn">HttpGet</span>(<span class="str">"https://raw.githubusercontent.com/yeahblxr/-Midnight-hub/refs/heads/main/Midnight%20wallwalking"</span>))()</pre>
+        <div class="border-t border-slate-800/50 p-4">
+          <button id="copyBtn" type="button" class="btn-primary w-full rounded-xl px-5 py-3.5 text-base font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">Copy script</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- ============================================================
-     PARTICLE SCRIPT + VARIABLE SYSTEM
-     ============================================================ -->
+  <!-- Steps -->
+  <section class="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-24" aria-labelledby="steps-title">
+    <div class="mx-auto max-w-3xl">
+      <h2 id="steps-title" class="text-2xl font-bold leading-tight tracking-tight text-white md:text-3xl">Running it takes three steps</h2>
+      <ol class="mt-8 grid gap-4 sm:grid-cols-3">
+        <li class="glass rounded-2xl p-6 shadow-xl transition-all duration-200 hover:-translate-y-1">
+          <span class="text-sm font-semibold text-violet-300">1</span>
+          <h3 class="mt-2 font-semibold tracking-tight text-white">Copy the script</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-300">Press Copy script. The full loader goes to your clipboard.</p>
+        </li>
+        <li class="glass rounded-2xl p-6 shadow-xl transition-all duration-200 hover:-translate-y-1">
+          <span class="text-sm font-semibold text-violet-300">2</span>
+          <h3 class="mt-2 font-semibold tracking-tight text-white">Paste into your executor</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-300">The script is keyless, so there is nothing to edit before you run it.</p>
+        </li>
+        <li class="glass rounded-2xl p-6 shadow-xl transition-all duration-200 hover:-translate-y-1">
+          <span class="text-sm font-semibold text-violet-300">3</span>
+          <h3 class="mt-2 font-semibold tracking-tight text-white">Execute</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-300">Join the game and press Execute, then reset your character to start walking on walls.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-slate-800/50">
+  <div class="mx-auto max-w-7xl px-4 py-8 text-sm leading-relaxed text-slate-400 md:px-8">
+    <p>&copy; 2026 Midnight Hub. Not affiliated with or endorsed by Roblox Corporation. Use at your own risk.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Script copied to clipboard</div>
+
 <script>
-/* ============================================================
-   QUICK VARIABLES (MODIFY THESE ONLY)
-   ============================================================ */
-const PAGE_TITLE = "Wallwalk - Midnight Hub";
-const CARD_TITLE = "Walk On Walls";
-const STATUS_TEXT = "Ready to Execute";
-const SCRIPT_CODE = `loadstring(game:HttpGet("https://raw.githubusercontent.com/yeahblxr/-Midnight-hub/refs/heads/main/Midnight%20wallwalking"))()`;
+/* ---------- Copy ---------- */
+const btn = document.getElementById('copyBtn');
+const toast = document.getElementById('toast');
+let timer;
 
-/* Apply variables */
-document.getElementById("pageTitle").innerText = PAGE_TITLE;
-document.getElementById("cardTitle").innerText = CARD_TITLE;
-document.getElementById("statusText").innerText = STATUS_TEXT;
-document.getElementById("codeText").innerText = SCRIPT_CODE;
-
-/* ============================================================
-   COPY FUNCTION
-   ============================================================ */
-function copyCode() {
-  navigator.clipboard.writeText(SCRIPT_CODE).then(() => {
-    const box = document.getElementById("successMessage");
-    box.classList.add("show");
-    setTimeout(() => box.classList.remove("show"), 3000);
-  });
+async function copyScript() {
+  const text = document.getElementById('code').textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const ta = Object.assign(document.createElement('textarea'), { value: text });
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+  }
+  btn.textContent = 'Copied';
+  btn.dataset.copied = 'true';
+  toast.classList.add('show');
+  clearTimeout(timer);
+  timer = setTimeout(() => {
+    btn.textContent = 'Copy script';
+    btn.dataset.copied = 'false';
+    toast.classList.remove('show');
+  }, 2500);
 }
+btn.addEventListener('click', copyScript);
 
-/* ============================================================
-   PARTICLE SYSTEM
-   ============================================================ */
-class ParticleSystem {
-  constructor() {
-    this.canvas = document.getElementById("particles-canvas");
-    this.ctx = this.canvas.getContext("2d");
-    this.particles = [];
-    this.count = 60;
-    this.distance = 120;
-
-    this.resize();
-    this.init();
-    this.loop();
-
-    window.addEventListener("resize", () => {
-      this.resize();
-      this.init();
-    });
-  }
-
-  resize() {
-    this.canvas.width = innerWidth;
-    this.canvas.height = innerHeight;
-  }
-
-  init() {
-    this.particles = [];
-    for (let i = 0; i < this.count; i++) {
-      this.particles.push({
-        x: Math.random() * innerWidth,
-        y: Math.random() * innerHeight,
-        vx: (Math.random() - 0.5),
-        vy: (Math.random() - 0.5),
-        size: Math.random() * 3 + 1,
-        opacity: Math.random(),
-        hue: 270 + Math.random() * 60
-      });
-    }
-  }
-
-  draw() {
-    this.ctx.clearRect(0, 0, innerWidth, innerHeight);
-
-    // connections
-    for (let a = 0; a < this.particles.length; a++) {
-      for (let b = a + 1; b < this.particles.length; b++) {
-        const dx = this.particles[a].x - this.particles[b].x;
-        const dy = this.particles[a].y - this.particles[b].y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-
-        if (dist < this.distance) {
-          this.ctx.strokeStyle = `rgba(149,75,246, ${1 - dist/this.distance})`;
-          this.ctx.lineWidth = 1;
-          this.ctx.beginPath();
-          this.ctx.moveTo(this.particles[a].x, this.particles[a].y);
-          this.ctx.lineTo(this.particles[b].x, this.particles[b].y);
-          this.ctx.stroke();
+/* ---------- Particles ---------- */
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const c = document.getElementById('particles'), ctx = c.getContext('2d');
+  let w, h, pts;
+  const init = () => {
+    w = c.width = innerWidth; h = c.height = innerHeight;
+    pts = Array.from({ length: Math.min(50, Math.floor(w / 28)) }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.6, vy: (Math.random() - 0.5) * 0.6,
+      r: Math.random() * 2 + 0.8, a: Math.random() * 0.6 + 0.2
+    }));
+  };
+  const tick = () => {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < pts.length; i++) {
+      const p = pts[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+      ctx.fillStyle = `rgba(209,190,243,${p.a})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      for (let j = i + 1; j < pts.length; j++) {
+        const q = pts[j], d = Math.hypot(p.x - q.x, p.y - q.y);
+        if (d < 120) {
+          ctx.strokeStyle = `rgba(149,75,246,${(1 - d / 120) * 0.5})`;
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
         }
       }
     }
-
-    // particles
-    this.particles.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-
-      if (p.x < 0 || p.x > innerWidth) p.vx *= -1;
-      if (p.y < 0 || p.y > innerHeight) p.vy *= -1;
-
-      this.ctx.fillStyle = `hsla(${p.hue}, 70%, 75%, ${p.opacity})`;
-      this.ctx.beginPath();
-      this.ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-      this.ctx.fill();
-    });
-  }
-
-  loop() {
-    this.draw();
-    requestAnimationFrame(() => this.loop());
-  }
-}
-
-new ParticleSystem();
+    requestAnimationFrame(tick);
+  };
+  addEventListener('resize', init);
+  init(); tick();
+})();
 </script>
-
 </body>
 </html>
